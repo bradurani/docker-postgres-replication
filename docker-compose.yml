@@ -12,8 +12,9 @@ services:
       PGDATA: '/var/lib/postgresql/data/pgdata'
     volumes:
      - '/var/lib/postgresql/data'
-    expose:
-     - '5432'
+    ports:
+     - '5432:5432'
+    network_mode: bridge
 
   pg-slave:
     build: '.'
@@ -26,7 +27,8 @@ services:
       REPLICATE_FROM: 'pg-master'
     volumes:
      - '/var/lib/postgresql/data'
-    expose:
-     - '5432'
+    ports:
+     - '5433:5432'
     links:
      - 'pg-master'
+    network_mode: bridge
